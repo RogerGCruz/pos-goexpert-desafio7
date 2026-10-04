@@ -38,6 +38,19 @@ $env:WEATHERAPI_KEY='SUA_WEATHERAPI_KEY_AQUI'
 docker compose up --build -d
 ```
 
+Exemplo (Git Bash / Linux / WSL)
+
+```bash
+# Opcional: apontar para WireMock local (mappings em `test/wiremock`) para testes
+export VIACEP_BASE_URL='http://wiremock:8080'
+export WEATHERAPI_BASE_URL='http://wiremock:8080'
+
+# Informe sua chave
+export WEATHERAPI_KEY='SUA_WEATHERAPI_KEY_AQUI'
+
+docker compose up --build -d
+```
+
 Serviços e portas:
 
 - `service-a`: http://localhost:8080 (POST `/weather`)
