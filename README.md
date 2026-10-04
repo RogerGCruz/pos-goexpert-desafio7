@@ -66,7 +66,7 @@ Endpoints úteis
 
 Variáveis de ambiente importantes
 --------------------------------
-- `WEATHERAPI_KEY` (obrigatória para chamadas à WeatherAPI em ambiente real). Nunca a coloque em código ou arquivos rastreados por VCS.
+- `WEATHERAPI_KEY` - obrigatória para chamadas à WeatherAPI.
 - `VIACEP_BASE_URL` e `WEATHERAPI_BASE_URL` - permitem apontar os serviços para endpoints mockados (WireMock) durante testes.
 
 Testes
