@@ -1,0 +1,51 @@
+version: '3.8'
+services:
+  service-a:
+    build: ./service-a
+    ports:
+      - 8080:8080
+    environment:
+      - SERVICE_B_URL=http://service-b:8081/weather
+      - OTEL_EXPORTER_OTLP_ENDPOINT=otel-collector:4317
+    depends_on:
+      - service-b
+
+  service-b:
+    build: ./service-b
+    ports:
+      - 8081:8081
+    environment:
+      - VIACEP_BASE_URL=${VIACEP_BASE_URL}
+      - WEATHERAPI_BASE_URL=${WEATHERAPI_BASE_URL}
+      - WEATHERAPI_KEY=${WEATHERAPI_KEY}
+      - OTEL_EXPORTER_OTLP_ENDPOINT=otel-collector:4317
+    depends_on:
+      - wiremock
+
+  otel-collector:
+    image: otel/opentelemetry-collector:0.80.0
+    command: ["--config=/etc/otel-collector-config.yaml"]
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml:ro
+    ports:
+      - 4317:4317
+    depends_on:
+      - zipkin
+
+  zipkin:
+    image: openzipkin/zipkin:2.23.2
+    ports:
+      - 9411:9411
+
+  wiremock:
+    image: wiremock/wiremock:2.35.0
+    ports:
+      - 8082:8080
+    volumes:
+      - ./test/wiremock:/home/wiremock
+    environment:
+      - JAVA_OPTS=-Dcom.github.tomakehurst.wiremock.global-response-templating=true
+
+# recommended env vars
+# VIACEP_BASE_URL defaults to https://viacep.com.br
+# WEATHERAPI_BASE_URL defaults to http://api.weatherapi.com
