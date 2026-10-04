@@ -1,0 +1,17 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPath": "/v1/current.json",
+    "queryParameters": {
+      "key": { "matches": ".*" },
+      "q": { "matches": ".*" }
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": "{ \"location\": { \"name\": \"Sao Paulo\" }, \"current\": { \"temp_c\": 17.8 } }",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}
